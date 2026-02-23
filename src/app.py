@@ -10,6 +10,8 @@ from validation_agent import validate_action_items
 import json
 from datetime import datetime, date
 from insights_agent import get_insights
+import pytz
+
 
 
 load_dotenv()
@@ -190,7 +192,10 @@ if page == "Dashboard":
 
         st.divider()
         if st.button("Re-validate Meeting", key="revalidate_btn"):
-            today = date.today().isoformat()
+            
+            est = pytz.timezone("America/New_York")
+            today = datetime.now(est).date().isoformat()
+            
 
             es.update_by_query(
                 index="action_items",
