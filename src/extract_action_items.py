@@ -1,7 +1,8 @@
 import requests
 import os
-from datetime import date
+from datetime import date, datetime
 from dotenv import load_dotenv
+import pytz
 
 load_dotenv()
 
@@ -12,7 +13,7 @@ AGENT_ID = os.getenv("ACTION_ITEM_EXTRACTION_AGENT_ID")
 
 def extract_and_store_action_items(meeting_id: str) -> dict:
     
-    today = date.today().isoformat()
+    est = pytz.timezone("America/New_York")
 
     headers = {
         "Content-Type": "application/json",
@@ -22,7 +23,7 @@ def extract_and_store_action_items(meeting_id: str) -> dict:
 
     payload = {
         "agent_id": AGENT_ID,
-        "input": f"Today is {date.today().strftime('%A, %Y-%m-%d')}. Extract all action items from meeting_id: {meeting_id}. Resolve any relative dates like 'tomorrow' or 'next Monday' into absolute YYYY-MM-DD dates based on today."
+        "input": f"Today is {datetime.now(est).strftime('%A, %Y-%m-%d')}. Extract all action items from meeting_id: {meeting_id}. Resolve any relative dates like 'tomorrow' or 'next Monday' into absolute YYYY-MM-DD dates based on today."
     }
 
     try:
