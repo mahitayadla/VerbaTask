@@ -230,7 +230,7 @@ if page == "Dashboard":
             with st.spinner("Re-running validation..."):
                 validation = validate_action_items(selected)
             if validation["success"]:
-                st.success(f"Done. {updated} items marked Overdue, validation report updated.")
+                st.success(f"Validation report updated.")
                 st.rerun()
             else:
                 st.error(f"Validation failed: {validation['error']}")
@@ -549,3 +549,4 @@ elif page == "About & Architecture":
             st.caption("Validation reports from the Validation Agent.")
 
             st.code('{ "meeting_id", "validation_reply" }', language="json")
+
